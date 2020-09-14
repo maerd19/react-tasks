@@ -3,14 +3,13 @@ import proyectoContext from "./../../context/proyectos/proyectoContext";
 
 const NuevoProyecto = () => {
   // Obtener el state del formulario
-  const proyectosContext = useContext(proyectoContext);
   const {
     formulario,
     errorformulario,
     mostrarFormulario,
     agregarProyecto,
     mostrarError,
-  } = proyectosContext;
+  } = useContext(proyectoContext);
 
   // State para el proyecto
   const [proyecto, setProyecto] = useState({

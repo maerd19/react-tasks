@@ -9,6 +9,7 @@ import {
   OBTENER_PROYECTOS,
   AGREGAR_PROYECTO,
   VALIDAR_FORMULARIO,
+  PROYECTO_ACTUAL,
 } from "./../../types";
 
 const ProyectoState = ({ children }) => {
@@ -23,6 +24,7 @@ const ProyectoState = ({ children }) => {
     proyectos: [],
     formulario: false,
     errorformulario: false,
+    proyecto: null,
   };
 
   // State y dispatch se obtienen del hook useReducer
@@ -64,16 +66,26 @@ const ProyectoState = ({ children }) => {
     });
   };
 
+  // Seleccionar el proyecto seleccionado
+  const proyectoActual = (proyectoId) => {
+    dispatch({
+      type: PROYECTO_ACTUAL,
+      payload: proyectoId,
+    });
+  };
+
   return (
     <proyectoContext.Provider
       value={{
         proyectos: state.proyectos,
         formulario: state.formulario,
         errorformulario: state.errorformulario,
+        proyecto: state.proyecto,
         mostrarFormulario,
         obtenerProyectos,
         agregarProyecto,
         mostrarError,
+        proyectoActual,
       }}
     >
       {children}
