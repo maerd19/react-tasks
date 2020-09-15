@@ -10,12 +10,14 @@ const Tarea = ({ tarea }) => {
     obtenerTareas,
     cambiarEstadoTarea,
     guardarTareaActual,
+    limpiarTarea,
   } = useContext(tareaContext);
 
   // El usuario elimina una tarea
   const tareaEliminar = (id) => {
     eliminarTarea(id);
     obtenerTareas(proyecto[0].id);
+    limpiarTarea();
   };
 
   // Funcion que modifica el estado de las tareas

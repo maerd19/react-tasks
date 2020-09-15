@@ -10,6 +10,7 @@ import {
   ESTADO_TAREA,
   TAREA_ACTUAL,
   ACTUALIZAR_TAREA,
+  LIMPIAR_TAREA,
 } from "./../../types";
 
 const TareaState = ({ children }) => {
@@ -113,6 +114,13 @@ const TareaState = ({ children }) => {
     });
   };
 
+  // Eliminar la tarea seleccionada
+  const limpiarTarea = () => {
+    dispatch({
+      type: LIMPIAR_TAREA,
+    });
+  };
+
   return (
     <tareaContext.Provider
       value={{
@@ -127,6 +135,7 @@ const TareaState = ({ children }) => {
         cambiarEstadoTarea,
         guardarTareaActual,
         actualizarTarea,
+        limpiarTarea,
       }}
     >
       {children}
