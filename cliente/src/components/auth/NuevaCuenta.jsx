@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import AlertaContext from "./../../context/alertas/alertaContext";
 
 const NuevaCuenta = () => {
+  // Extraer los valores del context
+  const { alerta, mostrarAlerta } = useContext(AlertaContext);
+
   // State para iniciar sesion
   const [usuario, setUsuario] = useState({
     email: "",
@@ -9,7 +13,6 @@ const NuevaCuenta = () => {
     confirmar: "",
     nombre: "",
   });
-  const [error, setError] = useState(false);
 
   // Extraer de usuario
   const { email, password, confirmar, nombre } = usuario;
@@ -21,7 +24,9 @@ const NuevaCuenta = () => {
 
   // El usuario inicia sesion
   const onSubmit = (e) => {
+    console.log("entre");
     e.preventDefault();
+
     // Validacion de campos vacios
     if (
       email.trim() === "" ||
@@ -29,19 +34,31 @@ const NuevaCuenta = () => {
       confirmar.trim() === "" ||
       nombre.trim() === ""
     ) {
-      setError(true);
+      mostrarAlerta("Todos los campos son obligatorios", "alerta-error");
       return;
     }
 
     // Password minimo de 6 caracteres
+    if (password.length < 6) {
+      mostrarAlerta(
+        "El password debe ser de al menos 6 caracteres",
+        "alerta-error"
+      );
+    }
 
     // Los 2 campos de password son iguales
+    if (password !== confirmar) {
+      mostrarAlerta("Los passwords no son iguales", "alerta-error");
+    }
 
     // Pasar al action
   };
 
   return (
     <div className="form-usuario">
+      {alerta ? (
+        <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
+      ) : null}
       <div className="contenedor-form sombra-dark">
         <h1>Obtener una cuenta</h1>
 
@@ -96,7 +113,7 @@ const NuevaCuenta = () => {
 
           <div className="campo-form">
             <input
-              type="text"
+              type="submit"
               className="btn btn-primario btn-block"
               value="Registrarme"
             />
