@@ -21,6 +21,7 @@ app.get("/", (req, res) => {
 
 // Importar rutas
 app.use("/api/usuarios", require("./routes/usuarios"));
+app.use("/api/auth", require("./routes/auth"));
 
 // Arranque de la app
 app.listen(PORT, () => {
