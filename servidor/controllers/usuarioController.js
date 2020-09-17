@@ -4,7 +4,7 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 
 exports.crearUsuario = async (req, res) => {
-  // Revisar si hay errores en las validaciones del check (route/usuario)
+  // Revisar si hay errores en las validaciones del check (route/usuarios)
   const errores = validationResult(req);
   if (!errores.isEmpty()) {
     return res.status(400).json({ errores: errores.array() });
@@ -65,6 +65,6 @@ exports.crearUsuario = async (req, res) => {
     // });
   } catch (error) {
     console.log(error);
-    res.status(400).send("Hubo un error");
+    res.status(500).send("Hubo un error");
   }
 };
