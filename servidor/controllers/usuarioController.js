@@ -17,10 +17,11 @@ exports.crearUsuario = async (req, res) => {
     // Revisar que el usuario registrado sea unico
     let usuario = await Usuario.findOne({ email });
 
-    if (usuario)
+    if (usuario) {
       return res.status(400).json({
         msg: "El usuario ya existe",
       });
+    }
 
     // Crear nuevo usuario
     usuario = new Usuario(req.body);
@@ -35,7 +36,7 @@ exports.crearUsuario = async (req, res) => {
     // Payload del JWT
     const payload = {
       usuario: {
-        // usuario.id viene del usuario que se esta guardando
+        // usuario.id viene del usuario almacenado
         // Como el token tendra el id del usuario cuando se inicie sesion en el sistema se puede consultar la BD y obtener los proyectos creados por este usuario
         id: usuario.id,
       },

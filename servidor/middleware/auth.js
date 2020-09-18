@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
   // Validar token
   try {
     const cifrado = jwt.verify(token, process.env.SECRETA);
-    // cifrado.usuario se obtiene del payload de JWT
+    // cifrado.usuario se obtiene del payload de JWT. Almacena el Id del usuario que esta accediendo y lo hace disponible en req
     req.usuario = cifrado.usuario;
     next();
   } catch (error) {
