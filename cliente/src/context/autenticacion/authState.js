@@ -1,7 +1,6 @@
 import React, { useReducer } from "react";
-
-import authContext from "./authContext";
-import authReducer from "./authReducer";
+import AuthContext from "./authContext";
+import AuthReducer from "./authReducer";
 
 import clienteAxios from "./../../config/axios";
 import tokenAuth from "./../../config/token";
@@ -21,9 +20,10 @@ const AuthState = ({ children }) => {
     autenticado: null,
     usuario: null,
     mensaje: null,
+    cargando: true,
   };
 
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   const registrarUsuario = async (datos) => {
     try {
@@ -96,20 +96,29 @@ const AuthState = ({ children }) => {
     }
   };
 
+  // El usuario cierra sesion
+  const cerrarSesion = () => {
+    dispatch({
+      type: CERRAR_SESION,
+    });
+  };
+
   return (
-    <authContext.Provider
+    <AuthContext.Provider
       value={{
         token: state.token,
         autenticado: state.autenticado,
         usuario: state.usuario,
         mensaje: state.mensaje,
+        cargando: state.cargando,
         registrarUsuario,
         iniciarSesion,
         usuarioAutenticado,
+        cerrarSesion,
       }}
     >
       {children}
-    </authContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
