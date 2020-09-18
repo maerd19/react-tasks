@@ -1,12 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AlertaContext from "./../../context/alertas/alertaContext";
 import AuthContext from "./../../context/autenticacion/authContext";
 
-const Login = () => {
+const Login = (props) => {
   // Extraer los valores del context
   const { alerta, mostrarAlerta } = useContext(AlertaContext);
   const { mensaje, autenticado, iniciarSesion } = useContext(AuthContext);
+
+  // En caso de que el usuario o password no existan
+  useEffect(() => {
+    if (autenticado) {
+      props.history.push("/proyectos");
+    }
+
+    if (mensaje) {
+      mostrarAlerta(mensaje.msg, mensaje.categoria);
+    }
+
+    // Al usar reactRouterDOM tenemos acceso a props.history
+  }, [mensaje, autenticado, props.history]);
 
   // State para iniciar sesion
   const [usuario, setUsuario] = useState({
