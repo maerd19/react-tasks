@@ -26,7 +26,6 @@ const NuevaCuenta = () => {
 
   // El usuario inicia sesion
   const onSubmit = (e) => {
-    console.log("entre");
     e.preventDefault();
 
     // Validacion de campos vacios
