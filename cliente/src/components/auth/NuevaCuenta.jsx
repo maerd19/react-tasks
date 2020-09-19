@@ -8,7 +8,7 @@ const NuevaCuenta = (props) => {
   const { alerta, mostrarAlerta } = useContext(AlertaContext);
   const { mensaje, autenticado, registrarUsuario } = useContext(AuthContext);
 
-  // En caso de que el usuario se haya autenticado o regostrado o sea un registro duplicado
+  // En caso de que el usuario se haya autenticado o registrado o sea un registro duplicado
   useEffect(() => {
     if (autenticado) {
       props.history.push("/proyectos");
