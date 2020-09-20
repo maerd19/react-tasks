@@ -25,6 +25,7 @@ const AuthState = ({ children }) => {
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
+  // Registro de un nuevo usuario
   const registrarUsuario = async (datos) => {
     try {
       const respuesta = await clienteAxios.post("/api/usuarios", datos);

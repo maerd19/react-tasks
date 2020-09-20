@@ -10,6 +10,8 @@ import {
   VALIDAR_FORMULARIO,
   PROYECTO_ACTUAL,
   ELIMINAR_PROYECTO,
+  EDICION_PROYECTO,
+  ACTUALIZAR_PROYECTO,
 } from "./../../types";
 
 import clienteAxios from "./../../config/axios";
@@ -21,6 +23,7 @@ const ProyectoState = ({ children }) => {
     errorformulario: false,
     proyecto: null,
     mensaje: null,
+    edicion: false,
   };
 
   // State y dispatch se obtienen del hook useReducer
@@ -35,8 +38,13 @@ const ProyectoState = ({ children }) => {
     });
   };
 
+  const edicionFormulario = () => {
+    dispatch({
+      type: EDICION_PROYECTO,
+    });
+  };
+
   // Obtener los proyectos
-  // Lo que tome la funcion como parametro sera el payload
   const obtenerProyectos = async () => {
     try {
       const resultado = await clienteAxios.get("/api/proyectos");
@@ -101,6 +109,30 @@ const ProyectoState = ({ children }) => {
     }
   };
 
+  // Actualizar un proyecto
+  const actualizarProyecto = async (proyecto) => {
+    try {
+      const resultado = await clienteAxios.put(
+        `/api/proyectos/${proyecto._id}`,
+        proyecto
+      );
+      dispatch({
+        type: ACTUALIZAR_PROYECTO,
+        payload: resultado.data.proyecto,
+      });
+    } catch (error) {
+      const alerta = {
+        msg: "Hubo un error",
+        categoria: "alerta-error",
+      };
+
+      dispatch({
+        type: PROYECTO_ERROR,
+        payload: alerta,
+      });
+    }
+  };
+
   return (
     <proyectoContext.Provider
       value={{
@@ -109,12 +141,15 @@ const ProyectoState = ({ children }) => {
         errorformulario: state.errorformulario,
         proyecto: state.proyecto,
         mensaje: state.mensaje,
+        edicion: state.edicion,
         mostrarFormulario,
         obtenerProyectos,
         agregarProyecto,
         mostrarError,
         proyectoActual,
         eliminarProyecto,
+        edicionFormulario,
+        actualizarProyecto,
       }}
     >
       {children}

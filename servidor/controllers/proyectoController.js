@@ -39,19 +39,8 @@ exports.obtenerProyectos = async (req, res) => {
 
 // Actualiza un proyecto
 exports.actualizarProyecto = async (req, res) => {
-  // Revisar si hay errores en las validaciones del check (route/proyectos)
-  const errores = validationResult(req);
-  if (!errores.isEmpty()) {
-    return res.status(400).json({ errores: errores.array() });
-  }
-
   // Extraer la informacion del proyecto
   const { nombre } = req.body;
-  const nuevoProyecto = {};
-
-  if (nombre) {
-    nuevoProyecto.nombre = nombre;
-  }
 
   try {
     // Revisar el ID
@@ -67,10 +56,16 @@ exports.actualizarProyecto = async (req, res) => {
       return res.status.status(401).json({ msg: "Accion no autorizada" });
     }
 
+    // Crear un objeto con la nueva informacion
+
+    const nuevoProyecto = {};
+
+    nuevoProyecto.nombre = nombre;
+
     // Actualizar
     proyecto = await Proyecto.findByIdAndUpdate(
       { _id: req.params.id },
-      { $set: nuevoProyecto },
+      nuevoProyecto,
       { new: true }
     );
 

@@ -9,7 +9,7 @@ const Proyectos = () => {
   // Extraer la informacion de autenticacion
   const { usuarioAutenticado } = useContext(AuthContext);
 
-  // Autenticar al usuario incluso si recargamos la app
+  // Autenticar al usuario al recargar la app
   useEffect(() => {
     usuarioAutenticado();
   }, []);

@@ -1,15 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import proyectoContext from "./../../context/proyectos/proyectoContext";
 
 const NuevoProyecto = () => {
   // Obtener el state del formulario
   const {
     formulario,
+    edicion,
+    proyecto: proyectoSeleccionado,
     errorformulario,
     mostrarFormulario,
     agregarProyecto,
     mostrarError,
+    actualizarProyecto,
   } = useContext(proyectoContext);
+
+  // Effect que detecta si hay edicion de proyecto
+  useEffect(() => {
+    setProyecto({
+      nombre: "",
+    });
+
+    if (edicion) setProyecto(proyectoSeleccionado[0]);
+  }, [edicion]);
 
   // State para el proyecto
   const [proyecto, setProyecto] = useState({
@@ -33,8 +45,14 @@ const NuevoProyecto = () => {
       return;
     }
 
-    // Agregar al state
-    agregarProyecto(proyecto);
+    // Es edicion o nuevo proyecto
+    if (!edicion) {
+      // Agregar al state
+      agregarProyecto(proyecto);
+    } else {
+      // Actualizar proyecto existente
+      actualizarProyecto(proyecto);
+    }
 
     // Reinicar el form
     setProyecto({
@@ -70,7 +88,7 @@ const NuevoProyecto = () => {
 
           <input
             type="submit"
-            value="Agregar Proyecto"
+            value={!edicion ? "Agregar Proyecto" : "Editar Proyecto"}
             className="btn btn-primario btn-block"
           />
         </form>

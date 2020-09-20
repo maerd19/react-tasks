@@ -24,9 +24,9 @@ const ListadoProyectos = () => {
 
   return (
     <ul className="listado-proyectos">
-      {alerta ? (
+      {alerta && (
         <div className={`alerta ${alerta.categoria}`}>{alerta.msg}</div>
-      ) : null}
+      )}
 
       <TransitionGroup>
         {proyectos.map((proyecto) => (

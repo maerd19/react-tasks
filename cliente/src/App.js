@@ -14,9 +14,8 @@ import RutaPrivada from "./components/rutas/RutaPrivada";
 
 // Revisar si tenemos un token
 const token = localStorage.getItem("token");
-if (token) {
-  tokenAuth(token);
-}
+// Obtener usuario autenticado
+if (token) tokenAuth(token);
 
 function App() {
   return (

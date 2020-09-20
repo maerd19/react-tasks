@@ -3,8 +3,8 @@ import AuthContext from "./../../context/autenticacion/authContext";
 
 const Barra = () => {
   const { usuario, usuarioAutenticado, cerrarSesion } = useContext(AuthContext);
-  // Autenticar al usuario incluso si recargamos la app
 
+  // Autenticar al usuario incluso si recargamos la app
   useEffect(() => {
     usuarioAutenticado();
     // eslint-disable-next-line

@@ -6,6 +6,8 @@ import {
   VALIDAR_FORMULARIO,
   PROYECTO_ACTUAL,
   ELIMINAR_PROYECTO,
+  EDICION_PROYECTO,
+  ACTUALIZAR_PROYECTO,
 } from "./../../types";
 
 export default (state, action) => {
@@ -15,10 +17,15 @@ export default (state, action) => {
         ...state,
         formulario: true,
       };
+    case EDICION_PROYECTO:
+      return {
+        ...state,
+        formulario: true,
+        edicion: true,
+      };
     case OBTENER_PROYECTOS:
       return {
         ...state,
-        // Lo que mandemos como payload se asignara al state
         proyectos: action.payload,
       };
     case AGREGAR_PROYECTO:
@@ -39,6 +46,8 @@ export default (state, action) => {
         proyecto: state.proyectos.filter(
           (proyecto) => proyecto._id === action.payload
         ),
+        edicion: false,
+        formulario: false,
       };
     case ELIMINAR_PROYECTO:
       return {
@@ -52,6 +61,28 @@ export default (state, action) => {
       return {
         ...state,
         mensaje: action.payload,
+      };
+    case ACTUALIZAR_PROYECTO:
+      let proyectos = state.proyectos.map((proyecto) =>
+        proyecto._id === action.payload._id ? action.payload : proyecto
+      );
+      console.log("proyectos", proyectos);
+      console.log("proyecto", state.proyecto[0]);
+      let proyecto = state.proyectos.filter(
+        (proyecto) => proyecto._id === state.proyecto[0]._id
+      );
+      console.log(proyecto);
+      return {
+        ...state,
+        proyectos: state.proyectos.map((proyecto) =>
+          proyecto._id === action.payload._id ? action.payload : proyecto
+        ),
+        proyecto: state.proyectos.filter(
+          (proyecto) => proyecto._id === state.proyecto[0]._id
+        ),
+        formulario: false,
+        errorformulario: false,
+        edicion: false,
       };
     default:
       return state;

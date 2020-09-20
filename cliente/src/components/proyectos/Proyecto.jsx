@@ -1,11 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import proyectoContext from "./../../context/proyectos/proyectoContext";
 import tareaContext from "./../../context/tareas/tareaContext";
 
 const Proyecto = ({ proyecto }) => {
-  const { proyectoActual } = useContext(proyectoContext);
+  const {
+    proyecto: proyectoSeleccionado,
+    proyectoActual,
+    edicionFormulario,
+  } = useContext(proyectoContext);
   const { obtenerTareas } = useContext(tareaContext);
+
+  useEffect(() => {
+    setMostrar(false);
+    if (proyectoSeleccionado && proyectoSeleccionado[0]._id === proyecto._id) {
+      setMostrar(true);
+    }
+  }, [proyectoSeleccionado]);
+
+  // State del componente
+  const [mostrar, setMostrar] = useState(false);
 
   // Funcion para agregar el proyecto actual
   const seleccionarProyecto = (id) => {
@@ -22,6 +36,8 @@ const Proyecto = ({ proyecto }) => {
       >
         {proyecto.nombre}{" "}
       </button>
+
+      {mostrar && <button onClick={() => edicionFormulario()}>Editar</button>}
     </li>
   );
 };

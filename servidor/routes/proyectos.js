@@ -17,12 +17,7 @@ router.post(
 router.get("/", auth, proyectoController.obtenerProyectos);
 
 // Actualizar proyecto via ID
-router.put(
-  "/:id",
-  auth,
-  [check("nombre", "El nombre del proyecto es obligatorio").not().isEmpty()],
-  proyectoController.actualizarProyecto
-);
+router.put("/:id", auth, proyectoController.actualizarProyecto);
 
 // Eliminar un proyecto
 router.delete("/:id", auth, proyectoController.eliminarProyecto);
